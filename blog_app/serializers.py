@@ -7,6 +7,23 @@ class BlogSerializer(serializers.ModelSerializer):
         model = Blog
         fields = '__all__'
 
+    # Field level validation
+        
+    def validate_name(self,value):
+        if len(value) < 4:
+            raise serializers.ValidationError('Blog name is too short !!!')
+        else:
+            return value
+        
+    
+    # Object level validation
+        
+    def validate(self, data):
+        if data['name']==data['description']:
+            raise serializers.ValidationError("Blog name and description can't be same")
+        else:
+            return data
+
 
 # simple serializer
 

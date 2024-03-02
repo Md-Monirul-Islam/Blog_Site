@@ -15,11 +15,11 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.name + '==>' + str(self.author)
-    
-    def save(self,*args, **kwargs):
-        if not self.slug:
+
+    def save(self, *args, **kwargs):
+        if not self.id:  # Check if the object is being created for the first time
             self.slug = slugify(self.name + "-" + str(self.post_date))
-            return super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
         
 
 class BlogComment(models.Model):
